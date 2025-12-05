@@ -1,0 +1,93 @@
+BEGIN;
+
+-- =========================
+-- Tabla Usuario
+-- =========================
+-- UserID: INT (se genera aleatorio en el servidor)
+-- Nombre: string
+-- Contrasena: string
+
+CREATE TABLE Usuario (
+  UserID      INT,
+  Nombre      VARCHAR(60),
+  Contrasena  VARCHAR(100),
+  PRIMARY KEY (UserID)
+);
+
+-- =========================
+-- Tabla Cuarto
+-- =========================
+-- CuartoID: INT (se genera aleatorio en el servidor)
+-- UserID: FK a Usuario(UserID)
+
+CREATE TABLE Cuarto (
+  CuartoID   INT,
+  UserID     INT,
+  Nombre     VARCHAR(60),
+  PRIMARY KEY (CuartoID),
+  FOREIGN KEY (UserID) REFERENCES Usuario(UserID)
+);
+
+-- =========================
+-- Tabla Dispositivo
+-- =========================
+-- DispositivoID: INT (aleatorio)
+-- CuartoID: FK
+-- Estado: INT (1 si server arrancó bien)
+
+CREATE TABLE Dispositivo (
+  DispositivoID INT,
+  CuartoID      INT,
+  Estado        INT,        -- 1 = OK
+  PRIMARY KEY (DispositivoID),
+  FOREIGN KEY (CuartoID) REFERENCES Cuarto(CuartoID)
+);
+
+-- =========================
+-- Tabla Sensor
+-- =========================
+-- SensorID: INT (aleatorio)
+-- DispositivoID: FK
+-- Tipo: 'ultrasonico' o 'magnetico'
+-- Pin: string (ej. "GPIO4")
+
+CREATE TABLE Sensor (
+  SensorID      INT,
+  DispositivoID INT,
+  Tipo          VARCHAR(20),
+  Pin           VARCHAR(30),
+  PRIMARY KEY (SensorID),
+  FOREIGN KEY (DispositivoID) REFERENCES Dispositivo(DispositivoID)
+);
+
+-- =========================
+-- Tabla Evento
+-- =========================
+-- EventoID: INT (aleatorio)
+-- CuartoID: INT (FK)
+-- SensorID: INT (FK)
+--
+-- EventoES (INT):
+--   1 = entrada
+--   2 = salida
+--   0 = sin movimiento
+--  -1 = desconocido
+--
+-- EventoAC (INT):
+--   1 = puerta abierta
+--   0 = puerta cerrada
+--  -1 = sin dato/desconocido
+
+CREATE TABLE Evento (
+  EventoID   INT,
+  CuartoID   INT,
+  SensorID   INT,
+  EventoES   INT,
+  EventoAC   INT,
+  Fecha      DATETIME,
+  PRIMARY KEY (EventoID),
+  FOREIGN KEY (CuartoID) REFERENCES Cuarto(CuartoID),
+  FOREIGN KEY (SensorID) REFERENCES Sensor(SensorID)
+);
+
+COMMIT;

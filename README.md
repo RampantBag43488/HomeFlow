@@ -2,7 +2,7 @@
 ### Joel García Guzmán
 ### Manuel Valentino Ortiz Sánchez
 ### Hector Alejandro Barron Tamayo
-### Iñaki Mancera Llan
+### Iñaki Mancera Llano
 Nuestro proyecto es una solucion de monitoreo de hogares, principalmente en el aspecto de entrada y salida de personas. Es un sistema el cual con sensores ultrasonicos posicionados correctamente puede detectar cuantas personas salen y entran a tu hogar. Esto tambien detecta los momentos en que la puerta se abre, cuantas personas hay en casa y envia notificaciones para cuando alguien entra y sale.
 
 ## DataBase en SQL
